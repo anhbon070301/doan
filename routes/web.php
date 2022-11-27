@@ -13,14 +13,14 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/',[App\Http\Controllers\Product_imageController::class, 'home'] )->name('trangchu');
+Route::get('/', [App\Http\Controllers\Product_imageController::class, 'home'])->name('trangchu');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/homeAdmin', [App\Http\Controllers\HomeController::class, 'home'])->name('homeAdmin')->middleware('checkAdmin');
 
-Route::group(['middleware' => 'checkAdmin'], function() {
+Route::group(['middleware' => 'checkAdmin'], function () {
     //Category
     Route::get('/showCate', [App\Http\Controllers\CategoryController::class, 'index'])->name('showCate');
     Route::get('/addCate', [App\Http\Controllers\CategoryController::class, 'create'])->name('addCate');
@@ -69,6 +69,7 @@ Route::group(['middleware' => 'checkAdmin'], function() {
     Route::get('/indexOrder', [App\Http\Controllers\OrderController::class, 'index'])->name('indexOrder');
     Route::get('/showbyId/{id}', [App\Http\Controllers\OrderController::class, 'showbyId'])->name('showbyId');
     Route::get('/updateOrder/{id}', [App\Http\Controllers\OrderController::class, 'update'])->name('updateOrder');
+    Route::get('/exportOrder', [App\Http\Controllers\OrderController::class, 'export'])->name('exportOrder');
 
     //user
     Route::get('/indexUser', [App\Http\Controllers\UserController::class, 'index'])->name('indexUser');
@@ -88,7 +89,7 @@ Route::get('/searchName', [App\Http\Controllers\ProductController::class, 'searc
 Route::get('/getSearchName', [App\Http\Controllers\ProductController::class, 'getSearchName'])->name('getSearchName');
 Route::get('/showbyView/{status}', [App\Http\Controllers\ProductController::class, 'showbyView'])->name('showbyView');
 
-Route::group(['middleware' => 'checkUser'], function() {
+Route::group(['middleware' => 'checkUser'], function () {
     //cart
     Route::post('/addCart', [App\Http\Controllers\CartController::class, 'save_cart'])->name('addCart');
     Route::get('/show_Cart', [App\Http\Controllers\CartController::class, 'show_cart'])->name('show_Cart');
@@ -122,7 +123,7 @@ Route::post('/updateComment', [App\Http\Controllers\CommentController::class, 'u
 //Report
 Route::get('/indexReport', [App\Http\Controllers\ReportController::class, 'index'])->name('indexReport');
 Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
-Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 

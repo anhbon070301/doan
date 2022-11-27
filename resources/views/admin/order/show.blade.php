@@ -1,37 +1,37 @@
 @include ('admin.index')
 
 <style>
-       .search-element {
-        display: flex;
-        justify-content: flex-start;
-        width: 100%;
-    }
+.search-element {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
 
-    .search {
-        display: flex;
-        flex-direction: column;
-        align-content: space-between;
-        height: 15%;
-        width: 100%;
-        margin-left: 6%;
-    }
+.search {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    height: 15%;
+    width: 100%;
+    margin-left: 6%;
+}
 
-    .detail {
-        display: flex;
-        align-items: center;
-    }
+.detail {
+    display: flex;
+    align-items: center;
+}
 
-    th {
-        text-align: center;
-    }
+th {
+    text-align: center;
+}
 
-    .detail-left {
-        width: 30%;
-    }
+.detail-left {
+    width: 30%;
+}
 
-    .detail-right {
-        width: 60%;
-    }
+.detail-right {
+    width: 60%;
+}
 </style>
 
 <div class="main">
@@ -42,35 +42,48 @@
 
                     <div class="card-header">
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><i class="icon-shopping-cart"></i> ORDERS &emsp; &emsp;</li>
+                            <li class="breadcrumb-item" style="width: 90%;"><i class="icon-shopping-cart"></i> ORDERS
+                                &emsp; &emsp;</li>
+                            <li>
+                                <form action="{{route('exportOrder')}}" method="get">
+                                    <button class="btn btn-primary">Export</button>
+                                </form>
+                            </li>
                         </ol>
                     </div>
 
                     <div class="widget-content">
 
-                    <form action=" {{ route('indexOrder') }} " method="get">
+                        <form action=" {{ route('indexOrder') }} " method="get">
                             <div class="search"> &emsp;
 
                                 <div class="search-element">
 
                                     <div class="control-group detail" style="width: 30%;">
                                         <label class="form-control detail-left">Customer's name</label>
-                                        <input id='searchInput' style="width: 57%;" class="form-control" name="inputName" type='text' placeholder="Customer's name"/>
+                                        <input id='searchInput' style="width: 57%;" class="form-control"
+                                            name="inputName" type='text' placeholder="Customer's name" />
                                     </div>
 
                                     <div class="control-group detail" style="width: 25%;">
                                         <label class="form-control detail-left">Phone</label>
-                                        <input style="width: 57%;" class="form-control" name="inputPhone" type='text' placeholder='Phone'/>
+                                        <input style="width: 57%;" class="form-control" name="inputPhone" type='text'
+                                            placeholder='Phone' />
                                     </div>
 
                                     <div class="control-group detail" style="width: 25%;">
                                         <label class="form-control detail-left">Email</label>
-                                        <input style="width: 57%;" class="form-control" name="inputEmail" type='text' placeholder='Email'/>
+                                        <input style="width: 57%;" class="form-control" name="inputEmail" type='text'
+                                            placeholder='Email' />
                                     </div>
 
                                     <div class="control-group" style="width: 10%; height: 90%;">
-                                        <button class="btn btn-secondary" name="btnSearch" value="btnSearch" style="color: black ;border-radius: 20px; height: 90%;"><i class="icon-search"></i></button> &emsp;
-                                        <a href="{{ route('indexOrder') }}" class="btn btn-secondary" style="color: black ;border-radius: 20px; height: 70%;"><i class="icon-retweet"></i></a>
+                                        <button class="btn btn-secondary" name="btnSearch" value="btnSearch"
+                                            style="color: black ;border-radius: 20px; height: 90%;"><i
+                                                class="icon-search"></i></button> &emsp;
+                                        <a href="{{ route('indexOrder') }}" class="btn btn-secondary"
+                                            style="color: black ;border-radius: 20px; height: 70%;"><i
+                                                class="icon-retweet"></i></a>
                                     </div>
 
                                 </div>
@@ -104,7 +117,8 @@
                                     <td style="text-align: left;">
                                         @foreach ($itemOrder as $items)
                                         @if ($orderList->id == $items->order_id)
-                                        <p>- {{ $items->product_name }} (<span>{{ $items->product_quantity }}</span>)</p>
+                                        <p>- {{ $items->product_name }} (<span>{{ $items->product_quantity }}</span>)
+                                        </p>
                                         @endif
                                         @endforeach
                                     </td>
@@ -114,8 +128,10 @@
                                     <td style="text-align: center;">Paid</td>
                                     @endif
                                     <td style="text-align: center;">
-                                        <a href="{{ route('showbyId', $orderList->id) }}" class="btn btn-primary"><i class="icon-eye-open"></i></a>
-                                        <a class="btn btn-success" href="{{ route('updateOrder', $orderList->id) }}"><i class="icon-eur"></i></a>
+                                        <a href="{{ route('showbyId', $orderList->id) }}" class="btn btn-primary"><i
+                                                class="icon-eye-open"></i></a>
+                                        <a class="btn btn-success" href="{{ route('updateOrder', $orderList->id) }}"><i
+                                                class="icon-eur"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

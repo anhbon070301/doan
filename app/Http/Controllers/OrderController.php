@@ -18,6 +18,8 @@ use App\Models\seesions;
 use Illuminate\Support\Facades\DB;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Mail;
+use App\Exports\ExportFile;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
@@ -109,7 +111,7 @@ class OrderController extends Controller
             return view('web/cart/show', compact('carts', 'products', 'productBestSell'))->with('totalMoney', $totalMoney)->with('quantity', $quantity);
         } else {
             return view('web/order/add', compact('carts', 'products', 'productBestSell', 'provinces'))->with('quantity', $quantity)->with('totalMoney', $totalMoney);
-        }    
+        }
     }
 
     /**
@@ -173,12 +175,13 @@ class OrderController extends Controller
         return redirect()->route('orderSuccess');
     }
 
-    public function orderSuccess() {
+    public function orderSuccess()
+    {
 
         $idOrder = 0;
 
         if (isset(Auth::user()->id)) {
-            $order = DB::select("SELECT MAX(id) as idOrder FROM orders WHERE customer_email like '%".Auth::user()->email."%'");
+            $order = DB::select("SELECT MAX(id) as idOrder FROM orders WHERE customer_email like '%" . Auth::user()->email . "%'");
             foreach ($order as $order) {
                 $idOrder = $order->idOrder;
             }
@@ -199,7 +202,7 @@ class OrderController extends Controller
         $quantity = 0;
 
         $products  = Product::where('active', self::STATUS_ACTIVE)->limit(self::STATUS_DELETED + 1)->get();
-        $orders = Order::where('customer_email', 'like', '%'.$email.'%')->orderBy('id', 'DESC')->get();
+        $orders = Order::where('customer_email', 'like', '%' . $email . '%')->orderBy('id', 'DESC')->get();
         $orderItem = Order_item::all();
         //$orderItem = DB::select("SELECT * FROM orders join order_items on orders.id = order_items.order_id WHERE orders.customer_email like '%" . $email . "%'");
 
@@ -235,7 +238,7 @@ class OrderController extends Controller
             $quantityOrder += $itemOrderData->product_quantity;
         }
 
-        $productBestSell = Product::where('active', self::STATUS_ACTIVE)->where('is_best_sell', '=', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->paginate(2); 
+        $productBestSell = Product::where('active', self::STATUS_ACTIVE)->where('is_best_sell', '=', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->paginate(2);
 
         return view('web/order/detail', compact('products', 'order', 'itemOrder', 'productBestSell'))->with('quantity', $quantity)->with('totalMoney', $totalMoney)->with('quantityOrder', $quantityOrder)->with('totalMoneyOrder', $totalMoneyOrder);
     }
@@ -278,9 +281,8 @@ class OrderController extends Controller
         //
     }
 
-    public function search(Request $request) {
-
-
+    public function search(Request $request)
+    {
     }
 
     public function select_delivery(Request $request)
@@ -313,5 +315,10 @@ class OrderController extends Controller
         $itemOrder = DB::select("SELECT * FROM orders join order_items on orders.id = order_items.order_id WHERE orders.customer_email like '%" . $order->customer_email . "%' and orders.id =" . $order->id);
 
         return view('admin/order/detail', compact('categories', 'brands', 'order', 'itemOrder'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new ExportFile, 'order.xlsx');
     }
 }
