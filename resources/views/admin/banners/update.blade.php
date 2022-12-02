@@ -12,7 +12,8 @@
                         </div> <!-- /widget-header -->
 
                         <div class="widget-content">
-                            <form action="{{ route('updateBanners', $banner->id) }}" enctype="multipart/form-data" method="post" id="edit-profile" class="form-horizontal">
+                            <form action="{{ route('updateBanners', $banner->id) }}" enctype="multipart/form-data"
+                                method="post" id="edit-profile" class="form-horizontal">
                                 @csrf
 
                                 <fieldset>
@@ -20,29 +21,33 @@
                                         <label class="control-label">Title <span style="color: red;">*</span></label>
                                         <div class="controls">
                                             @if ($errors->any())
-                                                <input class="span3" name="title" value="{!! old('title') !!}" type="text" />
-                                            @else 
-                                                <input type="text" class="span3" name="title" value="{{ $banner->title }}">
+                                            <input class="span3" name="title" value="{!! old('title') !!}"
+                                                type="text" />
+                                            @else
+                                            <input type="text" class="span3" name="title" value="{{ $banner->title }}">
                                             @endif
                                             @error ('title')
-                                                <br>
-                                                <label class="error">{{ $message }}</label>
-                                            @enderror               
+                                            <br>
+                                            <label class="error">{{ $message }}</label>
+                                            @enderror
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
 
                                     <div class="control-group">
-                                        <label class="control-label">Sort order <span style="color: red;">*</span></label>
+                                        <label class="control-label">Sort order <span
+                                                style="color: red;">*</span></label>
                                         <div class="controls">
                                             @if ($errors->any())
-                                                <input class="span3" name="sortOrder" value="{!! old('sortOrder') !!}" type="text" />
-                                            @else 
-                                                <input type="text" class="span3" name="sortOrder" value="{{ $banner->sort_order }}">
+                                            <input class="span3" name="sortOrder" value="{!! old('sortOrder') !!}"
+                                                type="text" />
+                                            @else
+                                            <input type="text" class="span3" name="sortOrder"
+                                                value="{{ $banner->sort_order }}">
                                             @endif
                                             @error ('sortOrder')
-                                                <br>
-                                                <label class="error">{{ $message }}</label>
-                                            @enderror             
+                                            <br>
+                                            <label class="error">{{ $message }}</label>
+                                            @enderror
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
 
@@ -51,19 +56,19 @@
                                         <div class="controls">
                                             <select class="span3" style="height: 28px;" name="acTive">
                                                 @if ($errors->any())
-                                                    @if (old('acTive') == 1)
-                                                        <option value="0">No</option>
-                                                        <option value="1" selected>Yes</option>
-                                                    @elseif (old('acTive') == 0)
-                                                        <option value="0" selected>No</option>
-                                                        <option value="1">Yes</option>
-                                                    @endif
+                                                @if (old('acTive') == 1)
+                                                <option value="0">No</option>
+                                                <option value="1" selected>Yes</option>
+                                                @elseif (old('acTive') == 0)
+                                                <option value="0" selected>No</option>
+                                                <option value="1">Yes</option>
+                                                @endif
                                                 @elseif ($banner->active == 0)
-                                                    <option value="0" selected>No</option>
-                                                    <option value="1">Yes</option>
+                                                <option value="0" selected>No</option>
+                                                <option value="1">Yes</option>
                                                 @else
-                                                    <option value="0">No</option>
-                                                    <option value="1" selected>Yes</option>
+                                                <option value="0">No</option>
+                                                <option value="1" selected>Yes</option>
                                                 @endif
                                             </select>
                                         </div> <!-- /controls -->
@@ -84,17 +89,19 @@
                                     </div> <!-- /control-group -->
 
                                     <div class="control-group">
-                                        <label class="control-label" >Content <span style="color: red;">*</span></label>
+                                        <label class="control-label">Content <span style="color: red;">*</span></label>
                                         <div class="controls">
                                             @if ($errors->any())
-                                                <textarea id="description" name="content" style="height: 150px;" class="span10 first">{!! old('content') !!}</textarea>
-                                            @else 
-                                                <textarea id="description" name="content" style="height: 150px;" class="span10 first">{{ $banner->content }}</textarea>
-                                            @endif 
+                                            <textarea id="textareaDescription" name="content" style="height: 150px;"
+                                                class="span10 first">{!! old('content') !!}</textarea>
+                                            @else
+                                            <textarea id="textareaDescription" name="content" style="height: 150px;"
+                                                class="span10 first">{{ $banner->content }}</textarea>
+                                            @endif
                                             @error ('content')
-                                                <br>
-                                                <label class="error">{{ $message }}</label>
-                                            @enderror 
+                                            <br>
+                                            <label class="error">{{ $message }}</label>
+                                            @enderror
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
 
@@ -106,7 +113,7 @@
 
                             </form>
                         </div> <!-- /widget-content -->
-                        
+
                     </div> <!-- /widget -->
                 </div> <!-- /span8 -->
             </div> <!-- /row -->

@@ -1,9 +1,9 @@
 @include ('admin.index')
 
 <style>
-    input.first {
-        min-height: 100px;
-    }
+input.first {
+    min-height: 100px;
+}
 </style>
 
 <div class="main">
@@ -19,7 +19,8 @@
                         </div> <!-- /widget-header -->
 
                         <div class="widget-content">
-                            <form action="{{ route('storeProduct') }}" method="post" id="edit-profile" class="form-horizontal" enctype="multipart/form-data">
+                            <form action="{{ route('storeProduct') }}" method="post" id="edit-profile"
+                                class="form-horizontal" enctype="multipart/form-data">
                                 @csrf
                                 <fieldset>
 
@@ -31,7 +32,8 @@
                                                 @foreach ($categories as $category)
                                                 @if ($errors->any())
                                                 @if (old('category') == $category->id)
-                                                <option selected value="{!! old('category') !!}">{{ $category->name }}</option>
+                                                <option selected value="{!! old('category') !!}">{{ $category->name }}
+                                                </option>
                                                 @else
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                 @endif
@@ -55,7 +57,8 @@
                                                 @foreach ($brands as $brand)
                                                 @if ($errors->any())
                                                 @if (old('brand') == $brand->id)
-                                                <option selected value="{!! old('brand') !!}">{{ $brand->name }}</option>
+                                                <option selected value="{!! old('brand') !!}">{{ $brand->name }}
+                                                </option>
                                                 @else
                                                 <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                                 @endif
@@ -72,7 +75,8 @@
                                     </div> <!-- /control-group -->
 
                                     <div class="control-group">
-                                        <label class="control-label">Product name <span style="color: red;">*</span></label>
+                                        <label class="control-label">Product name <span
+                                                style="color: red;">*</span></label>
                                         <div class="controls">
                                             <input type="text" class="span3" name="name" value="{!! old('name') !!}">
                                             @error ('name')
@@ -85,7 +89,8 @@
                                     <div class="control-group">
                                         <label class="control-label">Price <span style="color: red;">*</span></label>
                                         <div class="controls">
-                                            <input class="span3" name="price" type="text" value="{!! old('price') !!}" />
+                                            <input class="span3" name="price" type="text"
+                                                value="{!! old('price') !!}" />
                                             @error ('price')
                                             <br>
                                             <label class="error">{{ $message }}</label>
@@ -96,7 +101,8 @@
                                     <div class="control-group">
                                         <label class="control-label">Price old</label>
                                         <div class="controls">
-                                            <input class="span3" name="oldPrice" type="text" value="{!! old('oldPrice') !!}" />
+                                            <input class="span3" name="oldPrice" type="text"
+                                                value="{!! old('oldPrice') !!}" />
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
 
@@ -138,9 +144,11 @@
                                     </div> <!-- /control-group -->
 
                                     <div class="control-group">
-                                        <label class="control-label">Sort order <span style="color: red;">*</span></label>
+                                        <label class="control-label">Sort order <span
+                                                style="color: red;">*</span></label>
                                         <div class="controls">
-                                            <input type="text" class="span3" name="sortOrder" value="{!! old('sortOrder') !!}">
+                                            <input type="text" class="span3" name="sortOrder"
+                                                value="{!! old('sortOrder') !!}">
                                             @error ('sortOrder')
                                             <br>
                                             <label class="error">{{ $message }}</label>
@@ -176,15 +184,19 @@
                                     </div> <!-- /control-group -->
 
                                     <div class="control-group">
-                                        <label class="control-label">Description <span style="color: red;">*</span></label>
+                                        <label class="control-label">Description <span
+                                                style="color: red;">*</span></label>
                                         <div class="controls">
-                                            <textarea id="description" name="description" style="height: 150px;" class="span10 first">{!! old('description') !!}</textarea>
+                                            <textarea id="textareaDescription" name="description" style="height: 150px;"
+                                                class="span10 first">{!! old('description') !!}</textarea>
                                             @error ('description')
                                             <br>
                                             <label class="error">{{ $message }}</label>
                                             @enderror
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
+
+
 
                                     <div class="form-actions">
                                         <button type="submit" class="btn btn-primary">Save</button>
