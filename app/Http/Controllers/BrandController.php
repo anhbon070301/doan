@@ -13,6 +13,7 @@ class BrandController extends Controller
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
+    public $test = 'Tôi là test';
     /**
      * Display a listing of the resource.
      *
@@ -30,6 +31,11 @@ class BrandController extends Controller
         $brandList = Brand::where('active', '<', self::STATUS_DELETED)->orderBy('sort_order', 'ASC')->get();
 
         return view('admin/brands/show', compact('brands', 'categories', 'brandList'));
+    }
+
+    public function test()
+    {
+        return redirect()->route('homeAdmin');
     }
 
     /**
@@ -90,7 +96,7 @@ class BrandController extends Controller
         // Create Brand
         $brand = Brand::create($data);
 
-        session()->flash('messageAdd', $brand->name. ' has been added.');
+        session()->flash('messageAdd', $brand->name . ' has been added.');
         return redirect()->route('showBrand');
     }
 
@@ -174,7 +180,7 @@ class BrandController extends Controller
         //save Brand
         $brand->save();
 
-        session()->flash('messageDelete', $brand->name. ' has been updated.');
+        session()->flash('messageDelete', $brand->name . ' has been updated.');
         return redirect()->route('showBrand');
     }
 
@@ -203,9 +209,9 @@ class BrandController extends Controller
             // save brand
             $brand->save();
 
-            session()->flash('messageDelete', $brand->name. ' has been deleted.');
+            session()->flash('messageDelete', $brand->name . ' has been deleted.');
         } else {
-            session()->flash('messageError', $brand->name.' cannot be deleted.');
+            session()->flash('messageError', $brand->name . ' cannot be deleted.');
         }
         return redirect()->route('showBrand');
     }

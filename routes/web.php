@@ -128,3 +128,7 @@ Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ForgotPasswordCo
 Route::post('reset-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 // /Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('forget.password.get');
+
+Route::post('/submitImport', [App\Http\Controllers\ImportController::class, 'import'])->name('submitImport');
+Route::get('/importExportView', [App\Http\Controllers\ImportController::class, 'importExportView'])->name('importExportView');
+Route::get('/submitExport', [App\Http\Controllers\ExportExcel::class, 'exportExcel'])->name('submitExport');
