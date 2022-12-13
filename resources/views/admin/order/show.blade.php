@@ -45,9 +45,7 @@ th {
                             <li class="breadcrumb-item" style="width: 90%;"><i class="icon-shopping-cart"></i> ORDERS
                                 &emsp; &emsp;</li>
                             <li>
-                                <form action="{{route('exportOrder')}}" method="get">
-                                    <button class="btn btn-primary">Export</button>
-                                </form>
+                                <a class="btn btn-primary" href="{{route('exportOrder')}}">Export</a>
                             </li>
                         </ol>
                     </div>

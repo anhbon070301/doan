@@ -96,6 +96,7 @@ class CartController extends Controller
     {
         $products = Product::all();
         $newAmount = 0;
+        $messError = "";
 
         foreach ($products as $productData) {
             foreach ($request->data as $cartData) {
@@ -103,7 +104,7 @@ class CartController extends Controller
                 if ($productData->id == $cartData['productId']) {
                     if ($cartData['quantity'] < $cartData['value']) {
                         if (($cartData['value'] - $cartData['quantity']) > $productData->amount) {
-                            session()->flash('messageAmount', 'Quantity exceeds the allowable limit');
+                            $messError = "Quantity exceeds the allowable limit";
                         } else {
                             Cart::update($cartData['key'], $cartData['value']);
                             $product = Product::find($productData->id);
@@ -124,7 +125,7 @@ class CartController extends Controller
 
         $carts = Cart::content();
 
-        return response()->json(['carts' => $carts]);
+        return response()->json(['carts' => $carts, 'messError' => $messError]);
     }
 
     // update số lượng
@@ -132,6 +133,7 @@ class CartController extends Controller
     {
         $newQuantity = 0;
         $newAmount = 0;
+        $messError = "";
 
         $cart = Cart::get($request->rowId);
         $product = Product::find($cart->id);
@@ -144,7 +146,7 @@ class CartController extends Controller
                 if (1 > $product->amount) {
                     $newQuantity = $cart->qty;
                     $newAmount = $product->amount;
-                    session()->flash('messageAmount', 'Quantity exceeds the allowable limit');
+                    $messError = "Quantity exceeds the allowable limit";
                 } else {
                     $newQuantity = $cart->qty + 1;
                     $newAmount = $product->amount - 1;
@@ -158,6 +160,6 @@ class CartController extends Controller
 
         $carts = Cart::content();
 
-        return response()->json(['carts' => $carts]);
+        return response()->json(['carts' => $carts, 'messError' => $messError]);
     }
 }

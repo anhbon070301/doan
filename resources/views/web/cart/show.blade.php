@@ -95,6 +95,9 @@
                         {{ session('messageAmount') }}
                     </div>
                     @endif
+                    <div id="messError">
+
+                    </div>
                 </div>
 
                 <div class="product-content-right">
@@ -335,7 +338,7 @@
         </div>
     </div>
 </div> <!-- End footer bottom area -->
-<script src="/phone/resources/js/cartUpdate.js"></script>
+<script src="/phone/resources/js/cartJS.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"
     integrity="sha512-F636MAkMAhtTplahL9F6KmTfxTmYcAcjcCkyu0f0voT3N/6vzAuJ4Num55a0gEJ+hRLHhdz3vDvZpf6kqgEa5w=="
