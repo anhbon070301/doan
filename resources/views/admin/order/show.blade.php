@@ -45,7 +45,16 @@ th {
                             <li class="breadcrumb-item" style="width: 90%;"><i class="icon-shopping-cart"></i> ORDERS
                                 &emsp; &emsp;</li>
                             <li>
-                                <a class="btn btn-primary" href="{{route('exportOrder')}}">Export</a>
+                                &emsp14;
+                                <div>
+                                    <form action="{{route('exportOrder')}}" method="get">
+                                        <input type="hidden" name="name" value="{{$dataSearch['name']}}">
+                                        <input type="hidden" name="phone" value="{{$dataSearch['phone']}}">
+                                        <input type="hidden" name="email" value="{{$dataSearch['email']}}">
+                                        <input type="hidden" name="status" value="{{$dataSearch['status']}}">
+                                        <button type="submit" class="btn btn-primary">Export</button>
+                                    </form>
+                                </div>
                             </li>
                         </ol>
                     </div>

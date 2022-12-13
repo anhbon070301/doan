@@ -39,56 +39,66 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $inputName = "";
-        $inputPhone = "";
-        $inputEmail = "";
-        $query = "";
-        $orders = [];
+        // $inputName = "";
+        // $inputPhone = "";
+        // $inputEmail = "";
+        // $query = "";
+        // $orders = [];
 
-        if (isset($request->inputName)) {
-            $inputName = $request->inputName;
-            if ($query == "") {
-                $query .= " " . "customer_name like '%" . $request->inputName . "%'";
-            } else {
-                $query .= " AND " . "customer_name like '%" . $request->inputName . "%'";
-            }
-        }
+        // if (isset($request->inputName)) {
+        //     $inputName = $request->inputName;
+        //     if ($query == "") {
+        //         $query .= " " . "customer_name like '%" . $request->inputName . "%'";
+        //     } else {
+        //         $query .= " AND " . "customer_name like '%" . $request->inputName . "%'";
+        //     }
+        // }
 
-        if (isset($request->inputPhone)) {
-            $inputPhone = $request->inputPhone;
-            if ($query == "") {
-                $query .= " " . "customer_phone like '%" . $request->inputPhone . "%'";
-            } else {
-                $query .= " AND " . "customer_phone like '%" . $request->inputPhone . "%'";
-            }
-        }
+        // if (isset($request->inputPhone)) {
+        //     $inputPhone = $request->inputPhone;
+        //     if ($query == "") {
+        //         $query .= " " . "customer_phone like '%" . $request->inputPhone . "%'";
+        //     } else {
+        //         $query .= " AND " . "customer_phone like '%" . $request->inputPhone . "%'";
+        //     }
+        // }
 
-        if (isset($request->inputEmail)) {
-            $inputEmail = $request->inputEmail;
-            if ($query == "") {
-                $query .= " " . "customer_email like '%" . $request->inputEmail . "%'";
-            } else {
-                $query .= " AND " . "customer_email like '%" . $request->inputEmail . "%'";
-            }
-        }
+        // if (isset($request->inputEmail)) {
+        //     $inputEmail = $request->inputEmail;
+        //     if ($query == "") {
+        //         $query .= " " . "customer_email like '%" . $request->inputEmail . "%'";
+        //     } else {
+        //         $query .= " AND " . "customer_email like '%" . $request->inputEmail . "%'";
+        //     }
+        // }
 
-        if (isset($request->btnSearch)) {
-            if (!isset($request->inputName) && !isset($request->inputPhone) && !isset($request->inputEmail)) {
-                $orders = Order::orderBy('id', 'DESC')->get();
-                $this->status = "inactive";
-            } else {
-                $orders = DB::select('SELECT * FROM orders WhERE ' . $query);
-                $this->status = "active";
-            }
-        } else {
-            $orders = Order::all();
-        }
+        // if (isset($request->btnSearch)) {
+        //     if (!isset($request->inputName) && !isset($request->inputPhone) && !isset($request->inputEmail)) {
+        //         $orders = Order::orderBy('id', 'DESC')->get();
+        //         $this->data = $orders;
+        //     } else {
+        //         $orders = DB::select('SELECT * FROM orders WhERE ' . $query);
+        //         $this->status = $orders;
+        //     }
+        // } else {
+        //     $orders = Order::all();
+        //     $this->data = $orders;
+        // }
+        $dataSearch = [
+            'name' => $request->inputName,
+            'phone' => $request->inputPhone,
+            'email' => $request->inputEmail,
+            'status' => 'btnSearch'
+        ];
+        $orders = $this->search($request->inputName, $request->inputPhone, $request->inputEmail, $request->btnSearch);
+
+        $this->data = $orders;
 
         $categories = Category::where('active', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->get();
         $brands = Brand::where('active', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->get();
         $itemOrder = Order_item::all();
 
-        return view('admin/order/show', compact('categories', 'brands', 'orders', 'itemOrder'));
+        return view('admin/order/show', compact('categories', 'brands', 'orders', 'itemOrder', 'dataSearch'));
     }
 
     /**
@@ -286,8 +296,49 @@ class OrderController extends Controller
         //
     }
 
-    public function search(Request $request)
+    public function search($inputName, $inputPhone, $inputEmail, $btnSearch)
     {
+        $query = "";
+        $orders = [];
+
+        if (isset($inputName)) {
+            $this->name = $inputName;
+            if ($query == "") {
+                $query .= " " . "customer_name like '%" . $inputName . "%'";
+            } else {
+                $query .= " AND " . "customer_name like '%" . $inputName . "%'";
+            }
+        }
+
+        if (isset($inputPhone)) {
+            $this->phone = $inputPhone;
+            if ($query == "") {
+                $query .= " " . "customer_phone like '%" . $inputPhone . "%'";
+            } else {
+                $query .= " AND " . "customer_phone like '%" . $inputPhone . "%'";
+            }
+        }
+
+        if (isset($inputEmail)) {
+            $this->email = $inputEmail;
+            if ($query == "") {
+                $query .= " " . "customer_email like '%" . $inputEmail . "%'";
+            } else {
+                $query .= " AND " . "customer_email like '%" . $inputEmail . "%'";
+            }
+        }
+
+        if (isset($btnSearch)) {
+            if (!isset($inputName) && !isset($inputPhone) && !isset($inputEmail)) {
+                $orders = Order::orderBy('id', 'DESC')->get();
+            } else {
+                $orders = DB::select('SELECT * FROM orders WhERE ' . $query);
+            }
+        } else {
+            $orders = Order::all();
+        }
+
+        return $orders;
     }
 
     public function select_delivery(Request $request)
@@ -322,9 +373,9 @@ class OrderController extends Controller
         return view('admin/order/detail', compact('categories', 'brands', 'order', 'itemOrder'));
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        $orders = Order::orderBy('id', 'DESC')->get();
+        $orders = $this->search($request->name, $request->phone, $request->email, $request->status);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $i = 3;
