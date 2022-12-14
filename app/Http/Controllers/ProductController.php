@@ -102,7 +102,7 @@ class ProductController extends Controller
         $quantity = 0;
 
         $carts = Cart::content();
-        
+
         foreach ($carts as $keyCart => $cartData) {
             $totalMoney +=  $cartData->price * $cartData->qty;
             $quantity += $cartData->qty;
@@ -145,7 +145,7 @@ class ProductController extends Controller
             'category' => 'required',
             'brand' => 'required',
             'name' => 'required|unique:products',
-            'price' => 'required|numeric|max: '.$oldPrice,
+            'price' => 'required|numeric|max: ' . $oldPrice,
             'description' => 'required',
             'sortOrder' => 'required|numeric'
         ], [
@@ -182,7 +182,8 @@ class ProductController extends Controller
             'is_best_sell' => $request->bestSell,
             'is_new' => $request->isNew,
             'sort_order' => $request->sortOrder,
-            'active' => $request->acTive
+            'active' => $request->acTive,
+            'amount' => $request->amount
         ];
 
         $product = Product::create($data);
@@ -205,7 +206,7 @@ class ProductController extends Controller
 
         //check exist user
         $carts = Cart::content();
-        
+
         foreach ($carts as $keyCart => $cartData) {
             $totalMoney +=  $cartData->price * $cartData->qty;
             $quantity += $cartData->qty;
@@ -252,7 +253,7 @@ class ProductController extends Controller
 
         //product by tag
         $productTag = Product::where('active', self::STATUS_ACTIVE)->where('brand_id', $product->brand_id)->orderBy('sort_order', 'ASC')->get();
-     
+
         // dd($productTag);
         //image product by id
         $productImg = Product_image::where('active', self::STATUS_ACTIVE)->where('product_id', '=', $product->id)->orderBy('sort_order', 'ASC')->paginate(3);
@@ -328,7 +329,7 @@ class ProductController extends Controller
         $request->validate([
             'category' => 'required',
             'brand' => 'required',
-            'price' => 'required|numeric|max: '.$oldPrice,
+            'price' => 'required|numeric|max: ' . $oldPrice,
             'name' => 'required',
             'description' => 'required',
             'sortOrder' => 'required|numeric'
@@ -367,6 +368,7 @@ class ProductController extends Controller
         $products->is_new = $request->isNew;
         $products->active = $request->acTive;
         $products->sort_order = $request->sortOrder;
+        $products->amount = $request->amount;
 
         //save products
         $products->save();
@@ -408,7 +410,7 @@ class ProductController extends Controller
         $quantity = 0;
 
         $carts = Cart::content();
-        
+
         foreach ($carts as $keyCart => $cartData) {
             $totalMoney +=  $cartData->price * $cartData->qty;
             $quantity += $cartData->qty;
@@ -425,7 +427,7 @@ class ProductController extends Controller
         $quantity = 0;
 
         $carts = Cart::content();
-        
+
         foreach ($carts as $keyCart => $cartData) {
             $totalMoney +=  $cartData->price * $cartData->qty;
             $quantity += $cartData->qty;
@@ -438,7 +440,7 @@ class ProductController extends Controller
         } elseif ($status == 2) {
             if (!empty(session()->get('productReviewData'))) {
                 $products = array_reverse(session()->get('productReviewData'));
-            }  
+            }
         } elseif ($status == 3) {
             $products = Product::where('active', self::STATUS_ACTIVE)->where('is_new', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->paginate(self::PER_PAGE_FRONT);
         }
@@ -467,29 +469,29 @@ class ProductController extends Controller
         } else {
             $products = Product::where('name', 'like', '%' . $request->searchInput . '%')->where('active', self::STATUS_ACTIVE)->limit(self::PER_SEARCH)->get();
         }
-       
+
         $output = "";
- 
+
         foreach ($products as $productData) {
             if ($productData->old_price != 0) {
-                    $output .= '<div class="thubmnail-recent">
-                    <img style="width: 30%;" src="/phone/public/images/'. $productData->image .'" class="recent-thumb" alt="">
-                    <h2 style="width: 70;"><a href="'.route('showProduct', $productData->id).'">'.$productData->name.'</a></h2>
+                $output .= '<div class="thubmnail-recent">
+                    <img style="width: 30%;" src="/phone/public/images/' . $productData->image . '" class="recent-thumb" alt="">
+                    <h2 style="width: 70;"><a href="' . route('showProduct', $productData->id) . '">' . $productData->name . '</a></h2>
                     <div class="product-sidebar-price">
-                        <ins>$'. number_format($productData->price).'</ins> <del>$'. number_format($productData->old_price) .'</del>
+                        <ins>$' . number_format($productData->price) . '</ins> <del>$' . number_format($productData->old_price) . '</del>
                     </div>
                 </div>';
             } else {
                 $output .= '<div class="thubmnail-recent">
-                <img style="width: 30%;" src="/phone/public/images/'. $productData->image .'" class="recent-thumb" alt="">
-                <h2 style="width: 70;"><a href="'.route('showProduct', $productData->id).'">'.$productData->name.'</a></h2>
+                <img style="width: 30%;" src="/phone/public/images/' . $productData->image . '" class="recent-thumb" alt="">
+                <h2 style="width: 70;"><a href="' . route('showProduct', $productData->id) . '">' . $productData->name . '</a></h2>
                 <div class="product-sidebar-price">
-                    <ins>$'. number_format($productData->price).'</ins>
+                    <ins>$' . number_format($productData->price) . '</ins>
                 </div>
             </div>';
             }
         }
-        
+
         echo $output;
     }
 }

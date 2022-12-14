@@ -199,6 +199,19 @@
                                     </div> <!-- /control-group -->
 
                                     <div class="control-group">
+                                        <label class="control-label">Amount </label>
+                                        <div class="controls">
+                                            @if ($errors->any())
+                                            <input class="span3" name="amount" value="{!! old('amount') !!}"
+                                                type="number" />
+                                            @else
+                                            <input class="span3" name="amount" value="{{ $product->amount }}"
+                                                type="number" />
+                                            @endif
+                                        </div> <!-- /controls -->
+                                    </div> <!-- /control-group -->
+
+                                    <div class="control-group">
                                         <label class="control-label">Active</label>
                                         <div class="controls">
                                             <select class="span3" style="height: 28px;" name="acTive">

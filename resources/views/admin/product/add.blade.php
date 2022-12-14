@@ -157,6 +157,14 @@ input.first {
                                     </div> <!-- /control-group -->
 
                                     <div class="control-group">
+                                        <label class="control-label">Amount </label>
+                                        <div class="controls">
+                                            <input type="number" class="span3" name="amount"
+                                                value="{!! old('amount') !!}">
+                                        </div> <!-- /controls -->
+                                    </div> <!-- /control-group -->
+
+                                    <div class="control-group">
                                         <label class="control-label">Active</label>
                                         <div class="controls">
                                             <select class="span3" style="height: 28px;" name="acTive">
