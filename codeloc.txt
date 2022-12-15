@@ -1,0 +1,12 @@
+        elif self.stt_cbo() == "Lọc trung bình Hamonic":
+            if fname:
+                # cv2.imwrite(fname, self.anh_loc_tb_hinh_hoc)
+                print("Lưu thành công ")
+            else:
+                print("Lưu thất bại ")
+        elif self.stt_cbo() == "Lọc trung bình Contraharmonic":
+            if fname:
+                # cv2.imwrite(fname, self.anh_loc_tb_hinh_hoc)
+                print("Lưu thành công ")
+            else:
+                print("Lưu thất bại ")
